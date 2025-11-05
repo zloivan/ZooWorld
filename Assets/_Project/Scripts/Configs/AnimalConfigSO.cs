@@ -9,6 +9,7 @@ namespace DefaultNamespace.Configs
         public MovementType MovementType;
         public float Speed;
         public float JumpDistance;
+        public float CollisionRadius;
         public GameObject Prefab;
     }
 }
