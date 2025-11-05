@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using _Project.Scripts.Core;
+using DefaultNamespace.Configs;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
+namespace DefaultNamespace
+{
+    public class AnimalSpawner : MonoBehaviour
+    {
+        [SerializeField] private List<AnimalConfigSO> _animalConfigs;
+        [SerializeField] private float _spawnInterval = 2f;
+        [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);
+
+        private float _spawnTimer;
+        private float _nextSpawnTime;
+
+        private void Awake() =>
+            RestartTimer();
+
+        private void Update()
+        {
+            _spawnTimer += Time.deltaTime;
+
+            if (_spawnTimer >= _nextSpawnTime)
+            {
+                SpawnRandomAnimal();
+
+                RestartTimer();
+            }
+        }
+
+        private void RestartTimer()
+        {
+            //Can implememnt some randomization later
+            _spawnTimer = 0;
+
+            _nextSpawnTime = _spawnInterval;
+        }
+
+        private void SpawnRandomAnimal()
+        {
+            var configSO = _animalConfigs[Random.Range(0, _animalConfigs.Count)];
+
+            var spawnPosition = new Vector3(
+                Random.Range(-_spawnAreaSize.x / 2, _spawnAreaSize.x / 2),
+                0,
+                Random.Range(-_spawnAreaSize.y / 2, _spawnAreaSize.y / 2)
+            );
+
+
+            AnimalFactory.CreateAnimal(configSO, spawnPosition);
+        }
+    }
+}
