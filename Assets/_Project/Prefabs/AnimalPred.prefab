@@ -142,9 +142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7748e9514d34a1bbeaf910127220fbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collisionLayers:
+  _interactCollisions:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 64
+  _obstacleCollisions:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!65 &5495567376130596465
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -6,8 +6,9 @@ namespace DefaultNamespace
 {
     public class CollisionDetector : MonoBehaviour
     {
-        [SerializeField] private LayerMask _collisionLayers;
-
+        [SerializeField] private LayerMask _interactCollisions;
+        [SerializeField] private LayerMask _obstacleCollisions;
+        
         private Animal _animal;
         private IMovementBehavior _movementBehavior;
         private float _detectionRadius;
@@ -21,6 +22,31 @@ namespace DefaultNamespace
 
         public void FixedUpdate()
         {
+            ProcessInteractCollisions();
+            ProcessMovementCollisions();
+        }
+
+        private void ProcessMovementCollisions()
+        {
+            //if happens before initialization
+            if (_animal == null)
+                return;
+            
+            if (!_movementBehavior.CheckIfCanCollide())
+                return;
+
+            if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
+                    out _,
+                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _obstacleCollisions))
+            {
+                return;
+            }
+            
+            _movementBehavior.ReverseDirection();
+        }
+
+        private void ProcessInteractCollisions()
+        {
             //if happens before initialization
             if (_animal == null)
                 return;
@@ -32,11 +58,11 @@ namespace DefaultNamespace
             
             if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
                     out var hitInfo,
-                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _collisionLayers))
+                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _interactCollisions))
                 return;
 
             var otherAnimal = hitInfo.collider.GetComponent<Animal>();
-
+            
             //SHOULD NEVER HAPPEN
             Debug.Assert(otherAnimal != null, "No animal component found on collider");
 
@@ -51,10 +77,10 @@ namespace DefaultNamespace
             {
                 //Both are prey - toss both from each other
                 var direction = (otherAnimal.transform.position - _animal.transform.position).normalized;
-                const float bounceBackDistance = 1f;
+                const float BOUNCE_BACK_DISTANCE = 1f;
 
-                _animal.transform.position -= direction * bounceBackDistance;
-                otherAnimal.transform.position += direction * bounceBackDistance;
+                _animal.transform.position -= direction * BOUNCE_BACK_DISTANCE;
+                otherAnimal.transform.position += direction * BOUNCE_BACK_DISTANCE;
 
                 _animal.SetMoveDirection(-direction);
                 otherAnimal.SetMoveDirection(direction);
