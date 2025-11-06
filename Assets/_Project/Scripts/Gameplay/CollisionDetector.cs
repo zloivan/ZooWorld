@@ -1,5 +1,3 @@
-using System;
-using _Project.Scripts.Core;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -8,7 +6,7 @@ namespace DefaultNamespace
     {
         [SerializeField] private LayerMask _interactCollisions;
         [SerializeField] private LayerMask _obstacleCollisions;
-        
+
         private Animal _animal;
         private IMovementBehavior _movementBehavior;
         private float _detectionRadius;
@@ -31,18 +29,33 @@ namespace DefaultNamespace
             //if happens before initialization
             if (_animal == null)
                 return;
-            
+
             if (!_movementBehavior.CheckIfCanCollide())
                 return;
 
             if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
                     out _,
-                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _obstacleCollisions))
-            {
+                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 2f, _obstacleCollisions))
                 return;
+
+            //Try to find a free direction
+            Vector3[] directions =
+            {
+                Vector3.forward,
+                Vector3.right,
+                Vector3.back,
+                Vector3.left,
+            };
+
+            foreach (var dir in directions)
+            {
+                if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, dir,
+                        out _, Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 2f, _obstacleCollisions))
+                {
+                    _animal.SetMoveDirection(dir);
+                    return;
+                }
             }
-            
-            _movementBehavior.ReverseDirection();
         }
 
         private void ProcessInteractCollisions()
@@ -55,14 +68,14 @@ namespace DefaultNamespace
 
             if (!_movementBehavior.CheckIfCanCollide())
                 return;
-            
+
             if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
                     out var hitInfo,
                     Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _interactCollisions))
                 return;
 
             var otherAnimal = hitInfo.collider.GetComponent<Animal>();
-            
+
             //SHOULD NEVER HAPPEN
             Debug.Assert(otherAnimal != null, "No animal component found on collider");
 
@@ -106,7 +119,7 @@ namespace DefaultNamespace
                     {
                         //Random predator dies
 
-                        if (UnityEngine.Random.value < 0.5f)
+                        if (Random.value < 0.5f)
                             _animal.Die();
                         else
                             otherAnimal.Die();

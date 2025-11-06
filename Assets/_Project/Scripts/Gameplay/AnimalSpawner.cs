@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using _Project.Scripts.Core;
 using DefaultNamespace.Configs;
@@ -12,9 +11,13 @@ namespace DefaultNamespace
         [SerializeField] private List<AnimalConfigSO> _animalConfigs;
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);
+        [SerializeField] private LayerMask _obstacleLayer;
 
         private float _spawnTimer;
         private float _nextSpawnTime;
+        private Vector3 _lastCheckedPosition;
+        private bool _isPositionValid;
+        const float CHECK_RADIUS = 1f;
 
         private void Awake() =>
             RestartTimer();
@@ -33,7 +36,7 @@ namespace DefaultNamespace
 
         private void RestartTimer()
         {
-            //Can implememnt some randomization later
+            //TODO: Can implement some randomization later
             _spawnTimer = 0;
 
             _nextSpawnTime = _spawnInterval;
@@ -42,18 +45,31 @@ namespace DefaultNamespace
         [ContextMenu("SPAWN RANDOM ANIMAL")]
         private void SpawnRandomAnimal()
         {
+            
             var configSO = _animalConfigs[Random.Range(0, _animalConfigs.Count)];
+            
+            Vector3 spawnPosition;
 
-            var spawnPosition = new Vector3(
-                Random.Range(-_spawnAreaSize.x / 2, _spawnAreaSize.x / 2),
-                0,
-                Random.Range(-_spawnAreaSize.y / 2, _spawnAreaSize.y / 2)
-            );
+            while (true)
+            {
+                spawnPosition = new Vector3(
+                    Random.Range(-_spawnAreaSize.x / 2, _spawnAreaSize.x / 2),
+                    0,
+                    Random.Range(-_spawnAreaSize.y / 2, _spawnAreaSize.y / 2)
+                );
 
+                _lastCheckedPosition = spawnPosition; // Сохраняем позицию для визуализации
+                
+                _isPositionValid = !Physics.CheckSphere(spawnPosition, CHECK_RADIUS, _obstacleLayer);
+
+                if (_isPositionValid)
+                    break;
+            }
 
             AnimalFactory.CreateAnimal(configSO, spawnPosition);
         }
-        
+
+
         //DEBUG
         [ContextMenu("SPAWN 20 RANDOM ANIMAL")]
         private void Spawn20Animals()
@@ -62,6 +78,17 @@ namespace DefaultNamespace
             {
                 SpawnRandomAnimal();
             }
+        }
+        
+        private void OnDrawGizmos()
+        {
+            // Рисуем область спауна
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireCube(transform.position, new Vector3(_spawnAreaSize.x, 0, _spawnAreaSize.y));
+
+            // Рисуем сферу проверки
+            Gizmos.color = _isPositionValid ? Color.green : Color.red;
+            Gizmos.DrawWireSphere(_lastCheckedPosition, CHECK_RADIUS);
         }
     }
 }
