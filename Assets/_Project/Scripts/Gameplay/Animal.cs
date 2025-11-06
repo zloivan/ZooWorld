@@ -41,15 +41,11 @@ namespace DefaultNamespace
             _collisionDetector.Initialize(this, _movementBehavior, _config.AnimalRadius);
         }
 
-        private void Update()
-        {
+        private void Update() =>
             _movementBehavior?.Move();
-        }
 
-        public void Die()
-        {
+        public void Die() =>
             Destroy(gameObject);
-        }
 
         public void SetMoveDirection(Vector3 getMoveDirection) =>
             _currentDirection = getMoveDirection;

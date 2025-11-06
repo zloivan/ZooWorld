@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 132c314bf253a4f72adb255fc580ec02, type: 2}
+  - {fileID: 2100000, guid: 5146aca73db2e4376849ea4b50d75d35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6143379720362147738}
   - component: {fileID: 5495567376130596465}
   m_Layer: 6
-  m_Name: AnimalPred
+  m_Name: AnimalPrey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

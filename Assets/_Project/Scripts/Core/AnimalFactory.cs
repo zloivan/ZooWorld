@@ -18,11 +18,10 @@ namespace _Project.Scripts.Core
             switch (config.MovementType)
             {
                 case MovementType.Jump:
-                    //TODO: Implement Jump Movement
+                    movementBehavior = new JumpMovement(animal, config.Speed);
                     break;
                 case MovementType.Liear:
                     movementBehavior = new LinearMovement(animal, config.Speed);
-
                     break;
                 default:
                     Debug.LogError("No Movement Type defined in AnimalFactory");
