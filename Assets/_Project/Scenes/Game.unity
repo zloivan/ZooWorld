@@ -263,7 +263,7 @@ MonoBehaviour:
   _spawnAreaSize: {x: 58.1, y: 33.12}
   _obstacleLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!4 &281989863
 Transform:
   m_ObjectHideFlags: 0

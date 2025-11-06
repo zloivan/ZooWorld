@@ -12,7 +12,7 @@ namespace DefaultNamespace
 
 
         private float _jumpTimer;
-        private bool _isJumping = true;
+        private bool _isJumping;
         private float _speed;
         private Vector3 _startPosition;
         private Vector3 _targetPosition;
