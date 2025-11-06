@@ -23,7 +23,8 @@ namespace DefaultNamespace
     {
         private AnimalType _animalType;
         private AnimalConfigSO _config;
-        [SerializeField] private Vector3 _currentDirection;
+        private Vector3 _currentDirection;
+        private bool _isProcessingThisFrame;
 
         private IMovementBehavior _movementBehavior;
         private CollisionDetector _collisionDetector;
@@ -37,7 +38,7 @@ namespace DefaultNamespace
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
             
-            _collisionDetector.Initialize(this, _movementBehavior, _config.CollisionRadius);
+            _collisionDetector.Initialize(this, _movementBehavior);
         }
 
         private void Update()
@@ -55,5 +56,16 @@ namespace DefaultNamespace
 
         public Vector3 GetMoveDirection() =>
             _currentDirection;
+        
+        public AnimalConfigSO GetConfig() =>
+            _config;
+
+        public bool GetIfProcessingThisFrame() =>
+            _isProcessingThisFrame;
+        public void SetIfProcessingThisFrame(bool isProcessing) =>
+            _isProcessingThisFrame = isProcessing;
+
+        public bool IsPrey() =>
+            _animalType == AnimalType.Prey;
     }
 }
