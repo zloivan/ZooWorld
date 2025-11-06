@@ -5,5 +5,6 @@ namespace DefaultNamespace
         void Move();
         void ReverseDirection();
         bool CheckIfCanCollide();
+        float GetVelocityMagnitude();
     }
 }

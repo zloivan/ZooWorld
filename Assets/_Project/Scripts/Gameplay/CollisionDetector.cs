@@ -10,11 +10,13 @@ namespace DefaultNamespace
 
         private Animal _animal;
         private IMovementBehavior _movementBehavior;
+        private float _detectionRadius;
 
-        public void Initialize(Animal animal, IMovementBehavior movement)
+        public void Initialize(Animal animal, IMovementBehavior movement, float collisionSize)
         {
             _animal = animal;
             _movementBehavior = movement;
+            _detectionRadius = collisionSize;
         }
 
         public void FixedUpdate()
@@ -27,15 +29,12 @@ namespace DefaultNamespace
 
             if (!_movementBehavior.CheckIfCanCollide())
                 return;
-
-            if (!Physics.BoxCast(transform.position, new Vector3(0.5f, .5f, 0.5f), _animal.GetMoveDirection(),
-                    out var hitInfo,
-                    Quaternion.identity, .2f, _collisionLayers))
-            {
-                //Debug.Log("GOT HIT");
-                return;
-            }
             
+            if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
+                    out var hitInfo,
+                    Quaternion.identity, _movementBehavior.GetVelocityMagnitude() * 1.2f, _collisionLayers))
+                return;
+
             var otherAnimal = hitInfo.collider.GetComponent<Animal>();
 
             //SHOULD NEVER HAPPEN

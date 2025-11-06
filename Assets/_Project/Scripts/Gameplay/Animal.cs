@@ -38,7 +38,7 @@ namespace DefaultNamespace
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
             
-            _collisionDetector.Initialize(this, _movementBehavior);
+            _collisionDetector.Initialize(this, _movementBehavior, _config.AnimalRadius);
         }
 
         private void Update()

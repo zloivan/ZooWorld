@@ -8,6 +8,7 @@ namespace DefaultNamespace.Configs
         public AnimalType AnimalType;
         public MovementType MovementType;
         public float Speed;
+        public float AnimalRadius = .5f;
         public float JumpDistance;
         public GameObject Prefab;
     }

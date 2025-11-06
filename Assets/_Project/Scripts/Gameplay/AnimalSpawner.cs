@@ -39,6 +39,7 @@ namespace DefaultNamespace
             _nextSpawnTime = _spawnInterval;
         }
 
+        [ContextMenu("SPAWN RANDOM ANIMAL")]
         private void SpawnRandomAnimal()
         {
             var configSO = _animalConfigs[Random.Range(0, _animalConfigs.Count)];
@@ -51,6 +52,16 @@ namespace DefaultNamespace
 
 
             AnimalFactory.CreateAnimal(configSO, spawnPosition);
+        }
+        
+        //DEBUG
+        [ContextMenu("SPAWN 20 RANDOM ANIMAL")]
+        private void Spawn20Animals()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                SpawnRandomAnimal();
+            }
         }
     }
 }

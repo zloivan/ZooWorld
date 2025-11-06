@@ -18,8 +18,7 @@ namespace DefaultNamespace
 
         public void Move()
         {
-            _animal.transform.position += _speed
-                                          * Time.deltaTime
+            _animal.transform.position += GetVelocityMagnitude()
                                           * _animal.GetMoveDirection();
 
             _oneWayMovementTimer += Time.deltaTime;
@@ -30,11 +29,15 @@ namespace DefaultNamespace
             _animal.SetMoveDirection(randomDirection);
             _oneWayMovementTimer = 0f;
         }
+       
 
         public void ReverseDirection() =>
             _animal.SetMoveDirection(_animal.GetMoveDirection() * -1);
 
         public bool CheckIfCanCollide() =>
             true;
+
+        public float GetVelocityMagnitude() =>
+            _speed * Time.deltaTime;
     }
 }
