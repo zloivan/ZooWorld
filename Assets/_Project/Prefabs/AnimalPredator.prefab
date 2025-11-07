@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 6370069385179326434}
   - component: {fileID: 6345650363511379035}
   - component: {fileID: 6143379720362147738}
+  - component: {fileID: 9143351944910123710}
   - component: {fileID: 5495567376130596465}
   m_Layer: 6
   m_Name: AnimalPredator
@@ -148,6 +149,18 @@ MonoBehaviour:
   _obstacleCollisions:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &9143351944910123710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4723935258654629624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1135365338fc43abb33d84016f897c8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &5495567376130596465
 BoxCollider:
   m_ObjectHideFlags: 0

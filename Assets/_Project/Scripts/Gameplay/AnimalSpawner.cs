@@ -79,6 +79,15 @@ namespace DefaultNamespace
             }
         }
         
+        [ContextMenu("SPAWN 100 RANDOM ANIMAL")]
+        private void Spawn100Animals()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                SpawnRandomAnimal();
+            }
+        }
+        
         private void OnDrawGizmos()
         {
             // Рисуем область спауна

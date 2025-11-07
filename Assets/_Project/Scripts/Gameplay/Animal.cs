@@ -18,7 +18,7 @@ namespace DefaultNamespace
     }
 
 
-    [RequireComponent(typeof(CollisionDetector))]
+    [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))]
     public class Animal : MonoBehaviour
     {
         private AnimalType _animalType;
@@ -28,17 +28,22 @@ namespace DefaultNamespace
 
         private IMovementBehavior _movementBehavior;
         private CollisionDetector _collisionDetector;
+        private BoundaryMonitor _boundaryMonitor;
 
-        private void Awake() =>
+        private void Awake()
+        {
             _collisionDetector = gameObject.GetComponent<CollisionDetector>();
+            _boundaryMonitor = gameObject.GetComponent<BoundaryMonitor>();
+        }
 
         public void Initialize(AnimalConfigSO animalConfigSO, IMovementBehavior movement)
         {
             _config = animalConfigSO;
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
-            
+
             _collisionDetector.Initialize(this, _config.AnimalRadius);
+            _boundaryMonitor.Initialize(this, _movementBehavior);
         }
 
         private void Update() =>
@@ -52,12 +57,13 @@ namespace DefaultNamespace
 
         public Vector3 GetMoveDirection() =>
             _currentDirection;
-        
+
         public AnimalConfigSO GetConfig() =>
             _config;
 
         public bool GetIfProcessingThisFrame() =>
             _isProcessingThisFrame;
+
         public void SetIfProcessingThisFrame(bool isProcessing) =>
             _isProcessingThisFrame = isProcessing;
 
@@ -69,7 +75,7 @@ namespace DefaultNamespace
 
         public CollisionDetector GetCollisionDetector() =>
             _collisionDetector;
-        
+
         public IMovementBehavior GetMovementBehavior() =>
             _movementBehavior;
     }

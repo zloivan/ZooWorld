@@ -60,6 +60,7 @@ namespace DefaultNamespace
                 {
                     Animal.SetMoveDirection(freeDirection);
                 }
+                
                 return;
             }
 
