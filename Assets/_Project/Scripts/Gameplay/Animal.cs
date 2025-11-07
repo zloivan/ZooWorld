@@ -69,5 +69,8 @@ namespace DefaultNamespace
 
         public CollisionDetector GetCollisionDetector() =>
             _collisionDetector;
+        
+        public IMovementBehavior GetMovementBehavior() =>
+            _movementBehavior;
     }
 }

@@ -27,5 +27,10 @@ namespace DefaultNamespace
         {
             Animal.SetMoveDirection(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized);
         }
+
+        public virtual void OnInterrupted()
+        {
+            //Default implementation does nothing
+        }
     }
 }

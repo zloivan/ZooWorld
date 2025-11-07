@@ -76,8 +76,6 @@ namespace DefaultNamespace
             otherAnimal.SetIfProcessingThisFrame(true);
         
             //BOTH PREY
-            //BUG: Not working properly when more than 2 prey collide at once,
-            //BUG: since movement is managed via IMovementBehavior and get overwritten each frame
             if (_animal.IsPrey() && otherAnimal.IsPrey())
             {
                 //Both are prey - toss both from each other
@@ -89,6 +87,9 @@ namespace DefaultNamespace
         
                 _animal.SetMoveDirection(-direction);
                 otherAnimal.SetMoveDirection(direction);
+                
+                _animal.GetMovementBehavior()?.OnInterrupted();
+                otherAnimal.GetMovementBehavior()?.OnInterrupted();
             }
             else
             {

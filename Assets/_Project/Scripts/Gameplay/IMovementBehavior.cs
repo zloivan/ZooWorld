@@ -6,5 +6,6 @@ namespace DefaultNamespace
         void ReverseDirection();
         float GetVelocityMagnitude();
         void RandomlyRotateDirection();
+        void OnInterrupted();
     }
 }

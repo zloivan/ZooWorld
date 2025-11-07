@@ -56,5 +56,10 @@ namespace DefaultNamespace
 
         public override float GetVelocityMagnitude() =>
             _speed * Time.deltaTime;
+
+        public override void OnInterrupted()
+        {
+                        
+        }
     }
 }

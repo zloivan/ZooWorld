@@ -100,5 +100,13 @@ namespace DefaultNamespace
 
         public override float GetVelocityMagnitude() =>
             _speed * Time.deltaTime;
+
+        public override void OnInterrupted()
+        {
+            _isJumping = false;
+            _speed = 0f;
+            _cooldownTimer = 0f;
+            _jumpTimer = 0f;
+        }
     }
 }
