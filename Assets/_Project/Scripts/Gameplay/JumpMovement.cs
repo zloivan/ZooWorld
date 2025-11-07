@@ -41,6 +41,7 @@ namespace DefaultNamespace
             }
         }
 
+        //BUG: boundary monitor can't redirect while jumping, and after jump is completed, new jump will set its direction again without considering boundary
         private void PerformJump()
         {
             _jumpTimer += Time.deltaTime;

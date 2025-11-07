@@ -8,6 +8,8 @@ namespace DefaultNamespace
 {
     public class AnimalSpawner : MonoBehaviour
     {
+        
+        
         [SerializeField] private List<AnimalConfigSO> _animalConfigs;
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);
@@ -28,7 +30,7 @@ namespace DefaultNamespace
 
             if (_spawnTimer < _nextSpawnTime)
                 return;
-            
+
             SpawnRandomAnimal();
             RestartTimer();
         }
@@ -44,9 +46,8 @@ namespace DefaultNamespace
         [ContextMenu("SPAWN RANDOM ANIMAL")]
         private void SpawnRandomAnimal()
         {
-            
             var configSO = _animalConfigs[Random.Range(0, _animalConfigs.Count)];
-            
+
             Vector3 spawnPosition;
 
             while (true)
@@ -58,14 +59,15 @@ namespace DefaultNamespace
                 );
 
                 _lastCheckedPosition = spawnPosition;
-                
+
                 _isPositionValid = !Physics.CheckSphere(spawnPosition, CHECK_RADIUS, _obstacleLayer);
 
                 if (_isPositionValid)
                     break;
             }
 
-            AnimalFactory.CreateAnimal(configSO, spawnPosition);
+            var animalGo = AnimalFactory.CreateAnimal(configSO, spawnPosition);
+            animalGo.transform.SetParent(transform);
         }
 
 
@@ -78,7 +80,7 @@ namespace DefaultNamespace
                 SpawnRandomAnimal();
             }
         }
-        
+
         [ContextMenu("SPAWN 100 RANDOM ANIMAL")]
         private void Spawn100Animals()
         {
@@ -87,7 +89,7 @@ namespace DefaultNamespace
                 SpawnRandomAnimal();
             }
         }
-        
+
         private void OnDrawGizmos()
         {
             // Рисуем область спауна

@@ -21,6 +21,8 @@ namespace DefaultNamespace
     [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))]
     public class Animal : MonoBehaviour
     {
+        public static event EventHandler OnDied;
+
         private AnimalType _animalType;
         private AnimalConfigSO _config;
         private Vector3 _currentDirection;
@@ -49,8 +51,11 @@ namespace DefaultNamespace
         private void Update() =>
             _movementBehavior?.Move();
 
-        public void Die() =>
+        public void Die()
+        {
             Destroy(gameObject);
+            OnDied?.Invoke(this, EventArgs.Empty);
+        }
 
         public void SetMoveDirection(Vector3 getMoveDirection) =>
             _currentDirection = getMoveDirection;
