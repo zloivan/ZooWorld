@@ -21,7 +21,7 @@ namespace _Project.Scripts.Core
                     movementBehavior = new JumpMovement(animal, config.Speed);
                     movementBehavior.RandomlyRotateDirection();
                     break;
-                case MovementType.Liear:
+                case MovementType.Linear:
                     movementBehavior = new LinearMovement(animal, config.Speed);
                     movementBehavior.RandomlyRotateDirection();
                     break;

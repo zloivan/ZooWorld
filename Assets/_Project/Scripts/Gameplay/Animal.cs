@@ -14,7 +14,7 @@ namespace DefaultNamespace
     public enum MovementType
     {
         Jump,
-        Liear
+        Linear
     }
 
 

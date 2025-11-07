@@ -27,7 +27,7 @@ namespace DefaultNamespace
             //No path
             if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(),
                     //TODO: MAGIC NUMBER
-                    velMagnitude * 2))
+                    velMagnitude * 2f))
             {
                 //TODO: MAGIC NUMBER
                 if (CollisionDetector.TryFindFreeDirection(out var freeDirection, velMagnitude *
@@ -56,10 +56,5 @@ namespace DefaultNamespace
 
         public override float GetVelocityMagnitude() =>
             _speed * Time.deltaTime;
-
-        public override void OnInterrupted()
-        {
-                        
-        }
     }
 }

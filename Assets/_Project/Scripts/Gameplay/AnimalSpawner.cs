@@ -17,7 +17,7 @@ namespace DefaultNamespace
         private float _nextSpawnTime;
         private Vector3 _lastCheckedPosition;
         private bool _isPositionValid;
-        const float CHECK_RADIUS = 1f;
+        private const float CHECK_RADIUS = 1f;
 
         private void Awake() =>
             RestartTimer();
@@ -26,12 +26,11 @@ namespace DefaultNamespace
         {
             _spawnTimer += Time.deltaTime;
 
-            if (_spawnTimer >= _nextSpawnTime)
-            {
-                SpawnRandomAnimal();
-
-                RestartTimer();
-            }
+            if (_spawnTimer < _nextSpawnTime)
+                return;
+            
+            SpawnRandomAnimal();
+            RestartTimer();
         }
 
         private void RestartTimer()
@@ -58,7 +57,7 @@ namespace DefaultNamespace
                     Random.Range(-_spawnAreaSize.y / 2, _spawnAreaSize.y / 2)
                 );
 
-                _lastCheckedPosition = spawnPosition; // Сохраняем позицию для визуализации
+                _lastCheckedPosition = spawnPosition;
                 
                 _isPositionValid = !Physics.CheckSphere(spawnPosition, CHECK_RADIUS, _obstacleLayer);
 
@@ -70,7 +69,7 @@ namespace DefaultNamespace
         }
 
 
-        //DEBUG
+        //--------------------------------DEBUG
         [ContextMenu("SPAWN 20 RANDOM ANIMAL")]
         private void Spawn20Animals()
         {
