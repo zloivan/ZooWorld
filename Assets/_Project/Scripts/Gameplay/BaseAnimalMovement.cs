@@ -5,10 +5,9 @@ namespace DefaultNamespace
     public abstract class BaseAnimalMovement : IMovementBehavior
     {
         protected Animal Animal;
+        protected CollisionDetector CollisionDetector;
 
         public abstract void Move();
-
-        public abstract bool CheckIfCanCollide();
 
         public abstract float GetVelocityMagnitude();
 
@@ -20,8 +19,13 @@ namespace DefaultNamespace
             var sideShift = Random.value < 0.5f ? sideways : -sideways;
 
             const float TURN_DELTA = 0.3f;
-            
-            Animal.SetMoveDirection((reversed + sideShift * TURN_DELTA).normalized); 
+
+            Animal.SetMoveDirection((reversed + sideShift * TURN_DELTA).normalized);
+        }
+
+        public virtual void RandomlyRotateDirection()
+        {
+            Animal.SetMoveDirection(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized);
         }
     }
 }

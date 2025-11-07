@@ -38,7 +38,7 @@ namespace DefaultNamespace
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
             
-            _collisionDetector.Initialize(this, _movementBehavior, _config.AnimalRadius);
+            _collisionDetector.Initialize(this, _config.AnimalRadius);
         }
 
         private void Update() =>
@@ -63,5 +63,11 @@ namespace DefaultNamespace
 
         public bool IsPrey() =>
             _animalType == AnimalType.Prey;
+
+        public float GetCurrentVelocity() =>
+            _movementBehavior.GetVelocityMagnitude();
+
+        public CollisionDetector GetCollisionDetector() =>
+            _collisionDetector;
     }
 }

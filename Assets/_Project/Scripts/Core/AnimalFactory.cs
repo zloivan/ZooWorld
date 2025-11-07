@@ -19,9 +19,11 @@ namespace _Project.Scripts.Core
             {
                 case MovementType.Jump:
                     movementBehavior = new JumpMovement(animal, config.Speed);
+                    movementBehavior.RandomlyRotateDirection();
                     break;
                 case MovementType.Liear:
                     movementBehavior = new LinearMovement(animal, config.Speed);
+                    movementBehavior.RandomlyRotateDirection();
                     break;
                 default:
                     Debug.LogError("No Movement Type defined in AnimalFactory");
@@ -29,10 +31,8 @@ namespace _Project.Scripts.Core
             }
 
 
-            var randomDirection = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-            animal.SetMoveDirection(randomDirection);
             animal.Initialize(config, movementBehavior);
-
+            
             return animal;
         }
     }

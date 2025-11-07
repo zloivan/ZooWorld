@@ -4,7 +4,6 @@ namespace DefaultNamespace
 {
     public class JumpMovement : BaseAnimalMovement
     {
-        private readonly Animal _animal;
         private readonly float _jumpDistance;
 
         private const float JUMP_DURATION = 0.5f;
@@ -20,52 +19,84 @@ namespace DefaultNamespace
 
         public JumpMovement(Animal animal, float jumpDistance)
         {
-            _animal = animal;
+            Animal = animal;
+            CollisionDetector = Animal.GetCollisionDetector();
             _jumpDistance = jumpDistance;
         }
-
 
         public override void Move()
         {
             if (_isJumping)
             {
-                _jumpTimer += Time.deltaTime;
-                var progress = _jumpTimer / JUMP_DURATION;
-
-                _animal.transform.position =
-                    Vector3.Lerp(_startPosition, _targetPosition, progress);
-
-
-                if (progress >= 1f)
-                {
-                    _isJumping = false;
-                    _speed = 0f;
-                    _cooldownTimer = 0f;
-                }
+                PerformJump();
             }
             else
             {
                 _cooldownTimer += Time.deltaTime;
 
-                Debug.Log(_animal.name + _cooldownTimer);
                 if (_cooldownTimer >= JUMP_COOLDOWN)
                 {
-                    StartJump();
+                    TryStartJump();
                 }
             }
         }
 
-        private void StartJump()
+        private void PerformJump()
         {
-            _isJumping = true;
-            _jumpTimer = 0f;
-            _startPosition = _animal.transform.position;
-            _targetPosition = _startPosition + _animal.GetMoveDirection() * _jumpDistance;
-            _speed = _jumpDistance / JUMP_DURATION;
+            _jumpTimer += Time.deltaTime;
+            var progress = _jumpTimer / JUMP_DURATION;
+
+            var nextPosition = Vector3.Lerp(_startPosition, _targetPosition, progress);
+            var direction = (nextPosition - Animal.transform.position).normalized;
+            var distance = Vector3.Distance(Animal.transform.position, nextPosition);
+
+            if (!CollisionDetector.IsPathClear(direction, distance))
+            {
+                _isJumping = false;
+                _speed = 0f;
+                _cooldownTimer = 0f;
+
+                if (CollisionDetector.TryFindFreeDirection(out var freeDirection, _jumpDistance))
+                {
+                    Animal.SetMoveDirection(freeDirection);
+                }
+                return;
+            }
+
+            Animal.transform.position = nextPosition;
+
+            if (progress < 1f)
+                return;
+            
+            _isJumping = false;
+            _speed = 0f;
+            _cooldownTimer = 0f;
         }
 
-        public override bool CheckIfCanCollide() =>
-            _isJumping;
+        private bool TryStartJump()
+        {
+            if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(), _jumpDistance))
+            {
+                if (CollisionDetector.TryFindFreeDirection(out var freeDirection, _jumpDistance))
+                {
+                    Animal.SetMoveDirection(freeDirection);
+                }
+                else
+                {
+                    _cooldownTimer = 0f;
+                    return false;
+                }
+            }
+
+            _isJumping = true;
+            _jumpTimer = 0f;
+            _startPosition = Animal.transform.position;
+            RandomlyRotateDirection();
+            _targetPosition = _startPosition + Animal.GetMoveDirection() * _jumpDistance;
+            _speed = _jumpDistance / JUMP_DURATION;
+            
+            return true;
+        }
 
         public override float GetVelocityMagnitude() =>
             _speed * Time.deltaTime;
