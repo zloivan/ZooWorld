@@ -75,50 +75,52 @@ namespace DefaultNamespace
             _animal.SetIfProcessingThisFrame(true);
             otherAnimal.SetIfProcessingThisFrame(true);
         
+            
+            CollisingResolver.Resolve(_animal, otherAnimal);
             //BOTH PREY
-            if (_animal.IsPrey() && otherAnimal.IsPrey())
-            {
-                //Both are prey - toss both from each other
-                var direction = (otherAnimal.transform.position - _animal.transform.position).normalized;
-                const float BOUNCE_BACK_DISTANCE = 1f;
-        
-                _animal.transform.position -= direction * BOUNCE_BACK_DISTANCE;
-                otherAnimal.transform.position += direction * BOUNCE_BACK_DISTANCE;
-        
-                _animal.SetMoveDirection(-direction);
-                otherAnimal.SetMoveDirection(direction);
-                
-                _animal.GetMovementBehavior()?.OnInterrupted();
-                otherAnimal.GetMovementBehavior()?.OnInterrupted();
-            }
-            else
-            {
-                //ONE PREDATOR, ONE PREY
-                if (_animal.IsPrey() && !otherAnimal.IsPrey()
-                    || !_animal.IsPrey() && otherAnimal.IsPrey())
-                {
-                    //Prey dies
-                    if (_animal.IsPrey())
-                        _animal.Die();
-                    else
-                        otherAnimal.Die();
-        
-                    //TODO: Trigger prey death in UI
-                }
-                else
-                {
-                    //BOTH PREDATORS
-                    if (!_animal.IsPrey() && !otherAnimal.IsPrey())
-                    {
-                        //Random predator dies
-        
-                        if (Random.value < 0.5f)
-                            _animal.Die();
-                        else
-                            otherAnimal.Die();
-                    }
-                }
-            }
+            // if (_animal.IsPrey() && otherAnimal.IsPrey())
+            // {
+            //     //Both are prey - toss both from each other
+            //     var direction = (otherAnimal.transform.position - _animal.transform.position).normalized;
+            //     const float BOUNCE_BACK_DISTANCE = 1f;
+            //
+            //     _animal.transform.position -= direction * BOUNCE_BACK_DISTANCE;
+            //     otherAnimal.transform.position += direction * BOUNCE_BACK_DISTANCE;
+            //
+            //     _animal.SetMoveDirection(-direction);
+            //     otherAnimal.SetMoveDirection(direction);
+            //     
+            //     _animal.GetMovementBehavior()?.OnInterrupted();
+            //     otherAnimal.GetMovementBehavior()?.OnInterrupted();
+            // }
+            // else
+            // {
+            //     //ONE PREDATOR, ONE PREY
+            //     if (_animal.IsPrey() && !otherAnimal.IsPrey()
+            //         || !_animal.IsPrey() && otherAnimal.IsPrey())
+            //     {
+            //         //Prey dies
+            //         if (_animal.IsPrey())
+            //             _animal.Die();
+            //         else
+            //             otherAnimal.Die();
+            //
+            //         //TODO: Trigger prey death in UI
+            //     }
+            //     else
+            //     {
+            //         //BOTH PREDATORS
+            //         if (!_animal.IsPrey() && !otherAnimal.IsPrey())
+            //         {
+            //             //Random predator dies
+            //
+            //             if (Random.value < 0.5f)
+            //                 _animal.Die();
+            //             else
+            //                 otherAnimal.Die();
+            //         }
+            //     }
+            // }
         }
     }
 }
