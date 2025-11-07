@@ -29,9 +29,15 @@ namespace DefaultNamespace
         public void Resolve(Animal a, Animal b)
         {
             if (a.IsPrey())
+            {
                 a.Die();
+                b.NotifyAnimalEat(a);
+            }
             else
+            {
                 b.Die();
+                a.NotifyAnimalEat(b);
+            }
         }
     }
     
@@ -40,9 +46,15 @@ namespace DefaultNamespace
         public void Resolve(Animal a, Animal b)
         {
             if (Random.value < 0.5f)
+            {
                 a.Die();
+                b.NotifyAnimalEat(a);
+            }
             else
+            {
                 b.Die();
+                a.NotifyAnimalEat(b);
+            }
         }
     }
 }

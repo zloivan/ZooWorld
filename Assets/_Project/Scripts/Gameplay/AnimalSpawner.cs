@@ -8,8 +8,6 @@ namespace DefaultNamespace
 {
     public class AnimalSpawner : MonoBehaviour
     {
-        
-        
         [SerializeField] private List<AnimalConfigSO> _animalConfigs;
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);

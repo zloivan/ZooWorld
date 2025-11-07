@@ -21,6 +21,19 @@ namespace DefaultNamespace
     [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))]
     public class Animal : MonoBehaviour
     {
+        public class AnimalEatEventArgs : EventArgs
+        {
+            public Animal Attacker { get; }
+            public Animal Victim { get; }
+
+            public AnimalEatEventArgs(Animal attacker, Animal victim)
+            {
+                Attacker = attacker;
+                Victim = victim;
+            }
+        }
+
+        public static event EventHandler<AnimalEatEventArgs> OnEat;
         public static event EventHandler OnDied;
 
         private AnimalType _animalType;
@@ -83,5 +96,8 @@ namespace DefaultNamespace
 
         public IMovementBehavior GetMovementBehavior() =>
             _movementBehavior;
+
+        public void NotifyAnimalEat(Animal victim) =>
+            OnEat?.Invoke(this, new AnimalEatEventArgs(this, victim));
     }
 }

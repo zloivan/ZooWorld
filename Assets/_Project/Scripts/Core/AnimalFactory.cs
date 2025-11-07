@@ -2,7 +2,6 @@ using DefaultNamespace;
 using DefaultNamespace.Configs;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
 namespace _Project.Scripts.Core
 {
