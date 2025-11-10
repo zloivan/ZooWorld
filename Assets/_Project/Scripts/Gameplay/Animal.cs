@@ -61,8 +61,17 @@ namespace DefaultNamespace
             _boundaryMonitor.Initialize(this, _movementBehavior);
         }
 
-        private void Update() =>
+        private void Update()
+        {
             _movementBehavior?.Move();
+            HandleRotation();
+        }
+
+        private void HandleRotation()
+        {
+            var targetRotation = Quaternion.LookRotation(_currentDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        }
 
         public void Die()
         {
