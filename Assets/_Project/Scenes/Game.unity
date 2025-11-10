@@ -238,13 +238,14 @@ GameObject:
   - component: {fileID: 93131800}
   - component: {fileID: 93131802}
   - component: {fileID: 93131801}
+  - component: {fileID: 93131803}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: tmp_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &93131800
 RectTransform:
   m_ObjectHideFlags: 0
@@ -361,6 +362,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93131799}
   m_CullTransparentMesh: 1
+--- !u!114 &93131803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93131799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fe6cda2878e4f2f8eab20e18d110b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lifetime: 1
+  _worldOffset: {x: 0, y: 0, z: -1.84}
 --- !u!1 &146367819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,7 +1129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c14801e0b44ff59e284c1928ece146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 821248532}
+  _tastyLabelPrefab: {fileID: 93131799}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
