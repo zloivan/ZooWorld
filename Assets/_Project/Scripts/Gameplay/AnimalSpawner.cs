@@ -90,11 +90,11 @@ namespace DefaultNamespace
 
         private void OnDrawGizmos()
         {
-            // Рисуем область спауна
+            // Spawn area
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireCube(transform.position, new Vector3(_spawnAreaSize.x, 0, _spawnAreaSize.y));
 
-            // Рисуем сферу проверки
+            // Spawn position check
             Gizmos.color = _isPositionValid ? Color.green : Color.red;
             Gizmos.DrawWireSphere(_lastCheckedPosition, CHECK_RADIUS);
         }

@@ -100,7 +100,7 @@ namespace DefaultNamespace
         public bool IsPrey() =>
             _animalType == AnimalType.Prey;
 
-        public float GetCurrentVelocity() =>
+        public float GetCurrentVelocityMagnitude() =>
             _movementBehavior.GetVelocityMagnitude();
 
         public CollisionDetector GetCollisionDetector() =>

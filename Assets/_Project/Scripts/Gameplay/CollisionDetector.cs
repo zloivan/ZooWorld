@@ -62,7 +62,7 @@ namespace DefaultNamespace
             //TODO: MAGIC NUMBER
             if (!Physics.BoxCast(transform.position, Vector3.one * _detectionRadius, _animal.GetMoveDirection(),
                     out var hitInfo,
-                    Quaternion.identity, _animal.GetCurrentVelocity() * 1.2f, _interactCollisions))
+                    Quaternion.identity, _animal.GetCurrentVelocityMagnitude() * 1.4f, _interactCollisions))
                 return;
 
             var otherAnimal = hitInfo.collider.GetComponent<Animal>();
