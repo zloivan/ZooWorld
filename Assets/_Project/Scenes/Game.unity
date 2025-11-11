@@ -784,7 +784,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d6f1b6c9b16654c018a720a31052cdf9, type: 2}
   - {fileID: 11400000, guid: d969ccbc5d7b94317979ea8afcab5908, type: 2}
   _spawnInterval: 2
-  _spawnAreaSize: {x: 58.1, y: 33.12}
+  _spawnAreaSize: {x: 50, y: 27}
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 128

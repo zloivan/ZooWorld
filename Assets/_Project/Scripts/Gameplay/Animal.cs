@@ -18,7 +18,7 @@ namespace DefaultNamespace
     }
 
 
-    [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))]
+    [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))][SelectionBase]
     public class Animal : MonoBehaviour
     {
         public class AnimalEatEventArgs : EventArgs
@@ -33,6 +33,7 @@ namespace DefaultNamespace
             }
         }
 
+        public string Log;
         public static event EventHandler<AnimalEatEventArgs> OnEat;
         public static event EventHandler OnDied;
 
@@ -56,9 +57,8 @@ namespace DefaultNamespace
             _config = animalConfigSO;
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
-
+            transform.rotation = Quaternion.LookRotation(_currentDirection);
             _collisionDetector.Initialize(this, _config.AnimalRadius);
-            _boundaryMonitor.Initialize(this, _movementBehavior);
         }
 
         private void Update()
@@ -70,7 +70,10 @@ namespace DefaultNamespace
         private void HandleRotation()
         {
             var targetRotation = Quaternion.LookRotation(_currentDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+            
+            const float ROTATION_SPEED = 5f;
+            
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ROTATION_SPEED);
         }
 
         public void Die()
@@ -108,5 +111,8 @@ namespace DefaultNamespace
 
         public void NotifyAnimalEat(Animal victim) =>
             OnEat?.Invoke(this, new AnimalEatEventArgs(this, victim));
+        
+        public BoundaryMonitor GetBoundaryMonitor() =>
+            _boundaryMonitor;
     }
 }

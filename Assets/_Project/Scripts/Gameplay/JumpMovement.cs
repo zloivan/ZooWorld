@@ -9,7 +9,7 @@ namespace DefaultNamespace
         private const float JUMP_DURATION = 0.5f;
         private const float JUMP_COOLDOWN = 2f;
 
-
+        
         private float _jumpTimer;
         private bool _isJumping;
         private float _speed;
@@ -41,7 +41,6 @@ namespace DefaultNamespace
             }
         }
 
-        //BUG: boundary monitor can't redirect while jumping, and after jump is completed, new jump will set its direction again without considering boundary
         private void PerformJump()
         {
             _jumpTimer += Time.deltaTime;
@@ -77,23 +76,35 @@ namespace DefaultNamespace
 
         private bool TryStartJump()
         {
-            if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(), _jumpDistance))
+            if (Animal.GetBoundaryMonitor().GetNeedsRedirect())
             {
-                if (CollisionDetector.TryFindFreeDirection(out var freeDirection, _jumpDistance))
+                Animal.SetMoveDirection(Animal.GetBoundaryMonitor().GetCenterDirection());
+            }
+            else
+            {
+                if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(), _jumpDistance))
                 {
-                    Animal.SetMoveDirection(freeDirection);
+                    if (CollisionDetector.TryFindFreeDirection(out var freeDirection, _jumpDistance))
+                    {
+                        Animal.SetMoveDirection(freeDirection);
+                    }
+                    else
+                    {
+                        _cooldownTimer = 0f;
+                        return false;
+                    }
                 }
                 else
                 {
-                    _cooldownTimer = 0f;
-                    return false;
+                    RandomlyRotateDirection();
                 }
             }
+           
 
             _isJumping = true;
             _jumpTimer = 0f;
             _startPosition = Animal.transform.position;
-            RandomlyRotateDirection();
+            
             _targetPosition = _startPosition + Animal.GetMoveDirection() * _jumpDistance;
             _speed = _jumpDistance / JUMP_DURATION;
             

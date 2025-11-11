@@ -24,23 +24,30 @@ namespace DefaultNamespace
         {
             var velMagnitude = GetVelocityMagnitude();
 
-            //No path
-            if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(),
-                    //TODO: MAGIC NUMBER
-                    velMagnitude * 2f))
+            if (Animal.GetBoundaryMonitor().GetNeedsRedirect())
             {
-                //TODO: MAGIC NUMBER
-                if (CollisionDetector.TryFindFreeDirection(out var freeDirection, velMagnitude *
-                        2f))
+                Animal.SetMoveDirection(Animal.GetBoundaryMonitor().GetCenterDirection());
+            }
+            else
+            {
+                if (!CollisionDetector.IsPathClear(Animal.GetMoveDirection(),
+                        //TODO: MAGIC NUMBER
+                        velMagnitude * 2f))
+                {
+                    //TODO: MAGIC NUMBER
+                    if (CollisionDetector.TryFindFreeDirection(out var freeDirection, velMagnitude *
+                            2f))
 
-                {
-                    Animal.SetMoveDirection(freeDirection);
-                }
-                else
-                {
-                    RandomlyRotateDirection();
+                    {
+                        Animal.SetMoveDirection(freeDirection);
+                    }
+                    else
+                    {
+                        RandomlyRotateDirection();
+                    }
                 }
             }
+           
 
             Animal.transform.position += velMagnitude * Animal.GetMoveDirection();
             
