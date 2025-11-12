@@ -1,11 +1,12 @@
 using DefaultNamespace;
 using DefaultNamespace.Configs;
+using DG.Tweening;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace _Project.Scripts.Core
 {
-    public class AnimalFactory
+    public static class AnimalFactory
     {
         public static Animal CreateAnimal(AnimalConfigSO config, Vector3 position)
         {
@@ -31,7 +32,9 @@ namespace _Project.Scripts.Core
 
 
             animal.Initialize(config, movementBehavior);
+
             
+
             return animal;
         }
     }

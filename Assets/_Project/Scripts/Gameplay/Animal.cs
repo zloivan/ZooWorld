@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using DefaultNamespace.Configs;
+using DG.Tweening;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -50,7 +51,14 @@ namespace DefaultNamespace
         {
             _collisionDetector = gameObject.GetComponent<CollisionDetector>();
             _boundaryMonitor = gameObject.GetComponent<BoundaryMonitor>();
+            
+            const float ANIMATION_APPEAR_DURATION = .7f;
+
+            transform.DOScale(Vector3.one, ANIMATION_APPEAR_DURATION).From(Vector3.zero).SetEase(Ease.OutBounce);
         }
+
+        private void OnDestroy() =>
+            transform.DOKill();
 
         public void Initialize(AnimalConfigSO animalConfigSO, IMovementBehavior movement)
         {
