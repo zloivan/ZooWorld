@@ -1,5 +1,6 @@
 using System;
 using DefaultNamespace;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace _Project.Scripts.UI
 
         private int _preyCounter;
         private int _predatorCounter;
-        
+
         private void Awake()
         {
             UpdateUI();
@@ -21,18 +22,30 @@ namespace _Project.Scripts.UI
 
         private void HandleAnimalOnDied(object sender, EventArgs e)
         {
-           var isPrey = ((Animal)sender).IsPrey();
+            var isPrey = ((Animal)sender).IsPrey();
 
-           if (isPrey)
-           {
-               _preyCounter++;
-           }
-           else
-           {
-               _predatorCounter++;
-           }
+            const float ANIMATION_PUNCH_STRENGTH = 0.2f;
+            const float ANIMATION_DURATION = 0.3f;
+            const int ANIMATION_VIBRATO = 5;
+            const float ANIMATION_ELASTICITY = 0.5f;
 
-           UpdateUI();
+            if (isPrey)
+            {
+                _preyCounter++;
+
+                _preyCounterLabel.transform.DOComplete();
+                _preyCounterLabel.transform.DOPunchScale(Vector3.one * ANIMATION_PUNCH_STRENGTH,
+                    ANIMATION_DURATION, ANIMATION_VIBRATO, ANIMATION_ELASTICITY);
+            }
+            else
+            {
+                _predatorCounter++;
+                _predatorsCounterLabel.transform.DOComplete();
+                _predatorsCounterLabel.transform.DOPunchScale(Vector3.one * ANIMATION_PUNCH_STRENGTH,
+                    ANIMATION_DURATION, ANIMATION_VIBRATO, ANIMATION_ELASTICITY);
+            }
+
+            UpdateUI();
         }
 
         private void UpdateUI()

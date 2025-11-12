@@ -15,5 +15,6 @@ MonoBehaviour:
   AnimalType: 1
   MovementType: 1
   Speed: 4
+  AnimalRadius: 0.5
   JumpDistance: 0
   Prefab: {fileID: 4723935258654629624, guid: e1b27eccc2c2446dea67a87519c4d0ee, type: 3}

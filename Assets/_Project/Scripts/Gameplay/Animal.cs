@@ -114,5 +114,13 @@ namespace DefaultNamespace
         
         public BoundaryMonitor GetBoundaryMonitor() =>
             _boundaryMonitor;
+        
+        //DEBUG
+
+        [ContextMenu("Test Text")]
+        public void TestText()
+        {
+            OnEat?.Invoke(this, new AnimalEatEventArgs(this, null));
+        }
     }
 }
