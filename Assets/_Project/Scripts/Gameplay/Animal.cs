@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using DefaultNamespace.Configs;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace DefaultNamespace
 {
@@ -46,18 +47,21 @@ namespace DefaultNamespace
         private IMovementBehavior _movementBehavior;
         private CollisionDetector _collisionDetector;
         private BoundaryMonitor _boundaryMonitor;
+        private ObjectPool<Animal> _sourcePool;
 
         private void Awake()
         {
             _collisionDetector = gameObject.GetComponent<CollisionDetector>();
             _boundaryMonitor = gameObject.GetComponent<BoundaryMonitor>();
-            
-            const float ANIMATION_APPEAR_DURATION = .7f;
+        }
 
+        private void OnEnable()
+        {
+            const float ANIMATION_APPEAR_DURATION = .7f;
             transform.DOScale(Vector3.one, ANIMATION_APPEAR_DURATION).From(Vector3.zero).SetEase(Ease.OutBounce);
         }
 
-        private void OnDestroy() =>
+        private void OnDisable() =>
             transform.DOKill();
 
         public void Initialize(AnimalConfigSO animalConfigSO, IMovementBehavior movement)
@@ -86,7 +90,15 @@ namespace DefaultNamespace
 
         public void Die()
         {
-            Destroy(gameObject);
+            if (_sourcePool != null)
+            {
+                _sourcePool.Release(this);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
             OnDied?.Invoke(this, EventArgs.Empty);
         }
 
@@ -123,12 +135,7 @@ namespace DefaultNamespace
         public BoundaryMonitor GetBoundaryMonitor() =>
             _boundaryMonitor;
         
-        //DEBUG
-
-        [ContextMenu("Test Text")]
-        public void TestText()
-        {
-            OnEat?.Invoke(this, new AnimalEatEventArgs(this, null));
-        }
+        public void SetSourcePool(ObjectPool<Animal> sourcePool) =>
+            _sourcePool = sourcePool;
     }
 }

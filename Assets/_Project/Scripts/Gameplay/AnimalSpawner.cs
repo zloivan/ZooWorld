@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using _Project.Scripts.Core;
 using DefaultNamespace.Configs;
 using UnityEngine;
+using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
@@ -12,15 +13,22 @@ namespace DefaultNamespace
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);
         [SerializeField] private LayerMask _obstacleLayer;
-
+        [SerializeField] private int _defaultPoolSize = 10;
+        [SerializeField] private int _maxPoolSize = 50;
+        
         private float _spawnTimer;
         private float _nextSpawnTime;
         private Vector3 _lastCheckedPosition;
         private bool _isPositionValid;
-        private const float CHECK_RADIUS = 1f;
+        private const float SPAWN_CHECK_RADIUS = 1f;
 
-        private void Awake() =>
+        private Dictionary<AnimalConfigSO, ObjectPool<Animal>> _animalPools;
+        
+        private void Awake()
+        {
+            InitializePools();
             RestartTimer();
+        }
 
         private void Update()
         {
@@ -31,6 +39,41 @@ namespace DefaultNamespace
 
             SpawnRandomAnimal();
             RestartTimer();
+        }
+
+        private void InitializePools()
+        {
+            _animalPools = new Dictionary<AnimalConfigSO, ObjectPool<Animal>>();
+
+            foreach (var cfg in _animalConfigs)
+            {
+                var pool = new ObjectPool<Animal>(
+                    createFunc: () => CreateAnimalForPool(cfg),
+                    actionOnGet: OnGetFromPool,
+                    actionOnRelease: OnReleaseFromPool,
+                    actionOnDestroy: animal => Destroy(animal.gameObject),
+                    collectionCheck: true,
+                    defaultCapacity: _defaultPoolSize,
+                    maxSize: _maxPoolSize
+                );
+                
+                _animalPools[cfg] = pool;
+            }
+        }
+
+        private Animal CreateAnimalForPool(AnimalConfigSO cfg)
+        {
+            var animal = AnimalFactory.CreateAnimal(cfg, Vector3.zero);
+            animal.transform.SetParent(transform);
+            return animal;
+        }
+
+        private void OnGetFromPool(Animal animal) =>
+            animal.gameObject.SetActive(true);
+
+        private void OnReleaseFromPool(Animal animal)
+        {
+            animal.gameObject.SetActive(false);
         }
 
         private void RestartTimer()
@@ -58,14 +101,22 @@ namespace DefaultNamespace
 
                 _lastCheckedPosition = spawnPosition;
 
-                _isPositionValid = !Physics.CheckSphere(spawnPosition, CHECK_RADIUS, _obstacleLayer);
+                _isPositionValid = !Physics.CheckSphere(spawnPosition, SPAWN_CHECK_RADIUS, _obstacleLayer);
 
                 if (_isPositionValid)
                     break;
             }
 
-            var animalGo = AnimalFactory.CreateAnimal(configSO, spawnPosition);
-            animalGo.transform.SetParent(transform);
+            if (_animalPools.TryGetValue(configSO, out var pool))
+            {
+                var animal = pool.Get();
+                animal.transform.position = spawnPosition;
+                animal.SetSourcePool(pool);
+            }
+            else
+            {
+                Debug.LogError($"No pull found for animal config: {configSO.name}");
+            }
         }
 
 
@@ -96,7 +147,7 @@ namespace DefaultNamespace
 
             // Spawn position check
             Gizmos.color = _isPositionValid ? Color.green : Color.red;
-            Gizmos.DrawWireSphere(_lastCheckedPosition, CHECK_RADIUS);
+            Gizmos.DrawWireSphere(_lastCheckedPosition, SPAWN_CHECK_RADIUS);
         }
     }
 }
