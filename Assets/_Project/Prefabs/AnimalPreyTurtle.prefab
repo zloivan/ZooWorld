@@ -31,7 +31,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2674063021102533867}
+  - {fileID: 4323471579231158119}
   m_Father: {fileID: 6370069385179326434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1148698036298836389
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 132c314bf253a4f72adb255fc580ec02, type: 2}
+  - {fileID: 2100000, guid: 98a9c82b91ba745398e3fd4856aadab1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 9143351944910123710}
   - component: {fileID: 5495567376130596465}
   m_Layer: 6
-  m_Name: AnimalPredator
+  m_Name: AnimalPreyTurtle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,6 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8120d39aac4a4e7eaafe0dbc64c3f9b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Log: 
 --- !u!114 &6143379720362147738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1135365338fc43abb33d84016f897c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Log: 
 --- !u!65 &5495567376130596465
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!1 &9055094823668393543
+--- !u!1 &5677185850236666090
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,47 +192,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2674063021102533867}
-  - component: {fileID: 8328250674439744118}
-  - component: {fileID: 5677376677286109540}
-  - component: {fileID: 7302699519152062594}
+  - component: {fileID: 4323471579231158119}
+  - component: {fileID: 1841554933116955647}
+  - component: {fileID: 6485863677944388678}
+  - component: {fileID: 2646793016611756354}
   m_Layer: 0
-  m_Name: nouse
+  m_Name: Nouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2674063021102533867
+--- !u!4 &4323471579231158119
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9055094823668393543}
+  m_GameObject: {fileID: 5677185850236666090}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.55}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1.27}
+  m_LocalPosition: {x: 0, y: 0, z: 0.53}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1.290457}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8453896608623899667}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8328250674439744118
+--- !u!33 &1841554933116955647
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9055094823668393543}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5677376677286109540
+  m_GameObject: {fileID: 5677185850236666090}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6485863677944388678
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9055094823668393543}
+  m_GameObject: {fileID: 5677185850236666090}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -268,13 +268,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7302699519152062594
-BoxCollider:
+--- !u!135 &2646793016611756354
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9055094823668393543}
+  m_GameObject: {fileID: 5677185850236666090}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -287,5 +287,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

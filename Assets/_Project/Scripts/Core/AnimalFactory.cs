@@ -18,11 +18,15 @@ namespace _Project.Scripts.Core
             switch (config.MovementType)
             {
                 case MovementType.Jump:
-                    movementBehavior = new JumpMovement(animal, config.Speed);
+                    movementBehavior = new JumpMovement(animal, config.JumpDistance);
                     movementBehavior.RandomlyRotateDirection();
                     break;
                 case MovementType.Linear:
                     movementBehavior = new LinearMovement(animal, config.Speed);
+                    movementBehavior.RandomlyRotateDirection();
+                    break;
+                case MovementType.StopAndGo:
+                    movementBehavior = new StopAndGoMovement(animal, config.Speed);
                     movementBehavior.RandomlyRotateDirection();
                     break;
                 default:

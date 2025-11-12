@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 9143351944910123710}
   - component: {fileID: 5495567376130596465}
   m_Layer: 6
-  m_Name: AnimalPrey
+  m_Name: AnimalPreyFrog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

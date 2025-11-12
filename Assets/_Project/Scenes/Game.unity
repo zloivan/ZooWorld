@@ -376,6 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifetime: 1
   _worldOffset: {x: 0, y: 0, z: -1.84}
+  _canvasGroup: {fileID: 0}
 --- !u!1 &146367819
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,6 +784,7 @@ MonoBehaviour:
   _animalConfigs:
   - {fileID: 11400000, guid: d6f1b6c9b16654c018a720a31052cdf9, type: 2}
   - {fileID: 11400000, guid: d969ccbc5d7b94317979ea8afcab5908, type: 2}
+  - {fileID: 11400000, guid: 4964ebca4a6944c56b9b360bf81f473d, type: 2}
   _spawnInterval: 2
   _spawnAreaSize: {x: 50, y: 27}
   _obstacleLayer:
