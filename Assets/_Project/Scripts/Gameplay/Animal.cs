@@ -35,7 +35,6 @@ namespace DefaultNamespace
             }
         }
 
-        public string Log;
         public static event EventHandler<AnimalEatEventArgs> OnEat;
         public static event EventHandler OnDied;
 
