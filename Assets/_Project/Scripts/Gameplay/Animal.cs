@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using _Project.Scripts.Core.Signals;
 using DefaultNamespace.Configs;
 using DG.Tweening;
 using UnityEngine;
@@ -21,24 +22,9 @@ namespace DefaultNamespace
     }
 
 
-    [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))][SelectionBase]
+    [RequireComponent(typeof(CollisionDetector), typeof(BoundaryMonitor))] [SelectionBase]
     public class Animal : MonoBehaviour
     {
-        public class AnimalEatEventArgs : EventArgs
-        {
-            public Animal Attacker { get; }
-            public Animal Victim { get; }
-
-            public AnimalEatEventArgs(Animal attacker, Animal victim)
-            {
-                Attacker = attacker;
-                Victim = victim;
-            }
-        }
-
-        public static event EventHandler<AnimalEatEventArgs> OnEat;
-        public static event EventHandler OnDied;
-
         private AnimalType _animalType;
         private AnimalConfigSO _config;
         private Vector3 _currentDirection;
@@ -48,6 +34,7 @@ namespace DefaultNamespace
         private CollisionDetector _collisionDetector;
         private BoundaryMonitor _boundaryMonitor;
         private ObjectPool<Animal> _sourcePool;
+        private IAnimalSignals _signals;
 
         private void Awake()
         {
@@ -64,13 +51,14 @@ namespace DefaultNamespace
         private void OnDisable() =>
             transform.DOKill();
 
-        public void Initialize(AnimalConfigSO animalConfigSO, IMovementBehavior movement)
+        public void Initialize(AnimalConfigSO animalConfigSO, IMovementBehavior movement, IAnimalSignals signals)
         {
             _config = animalConfigSO;
             _animalType = animalConfigSO.AnimalType;
             _movementBehavior = movement;
             transform.rotation = Quaternion.LookRotation(_currentDirection);
             _collisionDetector.Initialize(this, _config.AnimalRadius);
+            _signals = signals;
         }
 
         private void Update()
@@ -82,9 +70,9 @@ namespace DefaultNamespace
         private void HandleRotation()
         {
             var targetRotation = Quaternion.LookRotation(_currentDirection);
-            
+
             const float ROTATION_SPEED = 5f;
-            
+
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * ROTATION_SPEED);
         }
 
@@ -98,8 +86,8 @@ namespace DefaultNamespace
             {
                 Destroy(gameObject);
             }
-            
-            OnDied?.Invoke(this, EventArgs.Empty);
+
+            _signals.OnAnimalDied?.Invoke(this);
         }
 
         public void SetMoveDirection(Vector3 getMoveDirection) =>
@@ -130,11 +118,11 @@ namespace DefaultNamespace
             _movementBehavior;
 
         public void NotifyAnimalEat(Animal victim) =>
-            OnEat?.Invoke(this, new AnimalEatEventArgs(this, victim));
-        
+            _signals?.OnAnimalEaten?.Invoke(new AnimalEatEventArgs(this, victim));
+
         public BoundaryMonitor GetBoundaryMonitor() =>
             _boundaryMonitor;
-        
+
         public void SetSourcePool(ObjectPool<Animal> sourcePool) =>
             _sourcePool = sourcePool;
     }

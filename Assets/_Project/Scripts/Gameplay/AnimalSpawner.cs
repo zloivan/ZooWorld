@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Project.Scripts.Core;
+using _Project.Scripts.Core.Signals;
 using DefaultNamespace.Configs;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -9,12 +10,15 @@ namespace DefaultNamespace
 {
     public class AnimalSpawner : MonoBehaviour
     {
+        [Header("Can spawn debug 20 and 100 animals via context menu")]
+        
         [SerializeField] private List<AnimalConfigSO> _animalConfigs;
         [SerializeField] private float _spawnInterval = 2f;
         [SerializeField] private Vector2 _spawnAreaSize = new(10f, 10f);
         [SerializeField] private LayerMask _obstacleLayer;
         [SerializeField] private int _defaultPoolSize = 10;
         [SerializeField] private int _maxPoolSize = 50;
+        [SerializeField] private AnimalSignals _animalSignals;
         
         private float _spawnTimer;
         private float _nextSpawnTime;
@@ -63,7 +67,7 @@ namespace DefaultNamespace
 
         private Animal CreateAnimalForPool(AnimalConfigSO cfg)
         {
-            var animal = AnimalFactory.CreateAnimal(cfg, Vector3.zero);
+            var animal = AnimalFactory.CreateAnimal(cfg, Vector3.zero, _animalSignals);
             animal.transform.SetParent(transform);
             return animal;
         }

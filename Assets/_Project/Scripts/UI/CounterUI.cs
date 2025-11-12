@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Core.Signals;
 using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
@@ -10,19 +11,20 @@ namespace _Project.Scripts.UI
     {
         [SerializeField] private TextMeshProUGUI _predatorsCounterLabel;
         [SerializeField] private TextMeshProUGUI _preyCounterLabel;
-
+        [SerializeField] private AnimalSignals _animalSignals;
+        
         private int _preyCounter;
         private int _predatorCounter;
 
         private void Awake()
         {
             UpdateUI();
-            Animal.OnDied += HandleAnimalOnDied;
+            _animalSignals.OnAnimalDied.AddListener(Animal_OnDied);
         }
 
-        private void HandleAnimalOnDied(object sender, EventArgs e)
+        private void Animal_OnDied(Animal animal)
         {
-            var isPrey = ((Animal)sender).IsPrey();
+            var isPrey = animal.IsPrey();
 
             const float ANIMATION_PUNCH_STRENGTH = 0.2f;
             const float ANIMATION_DURATION = 0.3f;

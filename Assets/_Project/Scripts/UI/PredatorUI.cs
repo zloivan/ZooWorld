@@ -1,3 +1,4 @@
+using _Project.Scripts.Core.Signals;
 using _Project.Scripts.UI;
 using UnityEngine;
 
@@ -6,19 +7,20 @@ namespace DefaultNamespace
     public class PredatorUI : MonoBehaviour
     {
         [SerializeField] private GameObject _tastyLabelPrefab;
+        [SerializeField] private AnimalSignals _animalSignals;
         
         private Camera _camera;
         
         private void Awake()
         {
             _camera = Camera.main;
-            Animal.OnEat += Animal_OnEat;
+            _animalSignals.OnAnimalEaten.AddListener(Animal_OnEaten);
         }
 
         private void OnDestroy() =>
-            Animal.OnEat -= Animal_OnEat;
+            _animalSignals.OnAnimalEaten.RemoveListener(Animal_OnEaten);
 
-        private void Animal_OnEat(object sender, Animal.AnimalEatEventArgs e)
+        private void Animal_OnEaten(AnimalEatEventArgs e)
         {
             var labelObject = Instantiate(_tastyLabelPrefab, transform);
 

@@ -1,6 +1,6 @@
+using _Project.Scripts.Core.Signals;
 using DefaultNamespace;
 using DefaultNamespace.Configs;
-using DG.Tweening;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -8,7 +8,7 @@ namespace _Project.Scripts.Core
 {
     public static class AnimalFactory
     {
-        public static Animal CreateAnimal(AnimalConfigSO config, Vector3 position)
+        public static Animal CreateAnimal(AnimalConfigSO config, Vector3 position, IAnimalSignals signals)
         {
             var go = Object.Instantiate(config.Prefab, position, Quaternion.identity);
             var animal = go.GetComponent<Animal>();
@@ -35,9 +35,8 @@ namespace _Project.Scripts.Core
             }
 
 
-            animal.Initialize(config, movementBehavior);
+            animal.Initialize(config, movementBehavior, signals);
 
-            
 
             return animal;
         }
