@@ -1,8 +1,7 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
 
-namespace _Project.Scripts.UI
+namespace ZooWorld.UI
 {
     public class TastyLabel : MonoBehaviour
     {

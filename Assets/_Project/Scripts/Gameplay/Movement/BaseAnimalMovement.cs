@@ -1,6 +1,7 @@
 using UnityEngine;
+using ZooWorld.Gameplay.Collisions;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay.Movement
 {
     public abstract class BaseAnimalMovement : IMovementBehavior
     {

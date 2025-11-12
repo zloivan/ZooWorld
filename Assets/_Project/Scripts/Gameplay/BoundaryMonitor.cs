@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay
 {
     public class BoundaryMonitor : MonoBehaviour
     {

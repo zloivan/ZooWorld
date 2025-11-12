@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using _Project.Scripts.Core;
-using _Project.Scripts.Core.Signals;
-using DefaultNamespace.Configs;
 using UnityEngine;
 using UnityEngine.Pool;
+using ZooWorld.Configs;
+using ZooWorld.Core;
+using ZooWorld.Core.Signals;
 using Random = UnityEngine.Random;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay
 {
     public class AnimalSpawner : MonoBehaviour
     {

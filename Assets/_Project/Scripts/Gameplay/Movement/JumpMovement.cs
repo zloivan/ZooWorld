@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay.Movement
 {
     public class JumpMovement : BaseAnimalMovement
     {

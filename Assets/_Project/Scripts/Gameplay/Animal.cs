@@ -1,12 +1,12 @@
-using System;
-using System.Runtime.CompilerServices;
-using _Project.Scripts.Core.Signals;
-using DefaultNamespace.Configs;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
+using ZooWorld.Configs;
+using ZooWorld.Core.Signals;
+using ZooWorld.Gameplay.Collisions;
+using ZooWorld.Gameplay.Movement;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay
 {
     public enum AnimalType
     {

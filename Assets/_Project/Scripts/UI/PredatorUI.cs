@@ -1,8 +1,7 @@
-using _Project.Scripts.Core.Signals;
-using _Project.Scripts.UI;
 using UnityEngine;
+using ZooWorld.Core.Signals;
 
-namespace DefaultNamespace
+namespace ZooWorld.UI
 {
     public class PredatorUI : MonoBehaviour
     {

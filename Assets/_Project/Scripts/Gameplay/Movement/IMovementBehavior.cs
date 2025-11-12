@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay.Movement
 {
     public interface IMovementBehavior
     {

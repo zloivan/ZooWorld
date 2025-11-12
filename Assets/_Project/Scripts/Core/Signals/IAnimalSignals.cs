@@ -1,8 +1,8 @@
 using System;
-using DefaultNamespace;
 using UnityEngine.Events;
+using ZooWorld.Gameplay;
 
-namespace _Project.Scripts.Core.Signals
+namespace ZooWorld.Core.Signals
 {
     public class AnimalEatEventArgs : EventArgs
     {

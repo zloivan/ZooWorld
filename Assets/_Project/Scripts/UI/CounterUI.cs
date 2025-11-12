@@ -1,11 +1,10 @@
-using System;
-using _Project.Scripts.Core.Signals;
-using DefaultNamespace;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using ZooWorld.Core.Signals;
+using ZooWorld.Gameplay;
 
-namespace _Project.Scripts.UI
+namespace ZooWorld.UI
 {
     public class CounterUI : MonoBehaviour
     {

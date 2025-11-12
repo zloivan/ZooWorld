@@ -1,10 +1,11 @@
-using _Project.Scripts.Core.Signals;
-using DefaultNamespace;
-using DefaultNamespace.Configs;
 using UnityEngine;
+using ZooWorld.Configs;
+using ZooWorld.Core.Signals;
+using ZooWorld.Gameplay;
+using ZooWorld.Gameplay.Movement;
 using Object = UnityEngine.Object;
 
-namespace _Project.Scripts.Core
+namespace ZooWorld.Core
 {
     public static class AnimalFactory
     {

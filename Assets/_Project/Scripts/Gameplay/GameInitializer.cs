@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
+using ZooWorld.Gameplay.Collisions;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay
 {
     public class GameInitializer : MonoBehaviour
     {

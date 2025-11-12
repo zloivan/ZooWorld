@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay.Collisions
 {
     public static class CollisingResolver
     {

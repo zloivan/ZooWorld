@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace ZooWorld.Gameplay.Collisions
 {
     public class CollisionDetector : MonoBehaviour
     {

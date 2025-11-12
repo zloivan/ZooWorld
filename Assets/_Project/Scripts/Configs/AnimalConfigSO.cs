@@ -1,6 +1,7 @@
 using UnityEngine;
+using ZooWorld.Gameplay;
 
-namespace DefaultNamespace.Configs
+namespace ZooWorld.Configs
 {
     [CreateAssetMenu(fileName = "AnimalConfigSO", menuName = "Configs/AnimalConfigSO", order = 0)]
     public class AnimalConfigSO : ScriptableObject
