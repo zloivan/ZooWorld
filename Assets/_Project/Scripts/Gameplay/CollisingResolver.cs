@@ -12,8 +12,16 @@ namespace DefaultNamespace
 
             public CollisionPair(AnimalType a, AnimalType b)
             {
-                _animalTypeA = a;
-                _animalTypeB = b;
+                if (a <= b)
+                {
+                    _animalTypeA = a;
+                    _animalTypeB = b;
+                }
+                else
+                {
+                    _animalTypeA = b;
+                    _animalTypeB = a;
+                }
             }
 
             public override bool Equals(object obj)
@@ -36,7 +44,6 @@ namespace DefaultNamespace
             {
                 { new CollisionPair(AnimalType.Prey, AnimalType.Prey), new PreyPreyRule() },
                 { new CollisionPair(AnimalType.Predator, AnimalType.Prey), new PredatorPreyRule() },
-                { new CollisionPair(AnimalType.Prey, AnimalType.Predator), new PredatorPreyRule() },
                 { new CollisionPair(AnimalType.Predator, AnimalType.Predator), new PredatorPredatorRule() },
             };
         }
