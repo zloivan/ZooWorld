@@ -1,6 +1,7 @@
 # Zoo World
 
 A Unity-based ecosystem simulation featuring predators and prey with dynamic behaviors, collision interactions, and population management.
+  
 ![Gameplay](docs/gameplay.gif)
 ## 🎮 Overview
 
