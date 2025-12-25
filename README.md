@@ -1,7 +1,7 @@
 # Predator-Prey Simulation
 
 A Unity-based ecosystem simulation featuring predators and prey with dynamic behaviors, collision interactions, and population management.
-
+![Gameplay](docs/gameplay.gif)
 ## 🎮 Overview
 
 This project simulates a simple ecosystem where predators hunt prey, animals move autonomously, and population dynamics emerge from their interactions. Built with Unity 2022.3.62f3 and Universal Render Pipeline (URP).
